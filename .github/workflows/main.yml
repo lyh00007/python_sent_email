@@ -1,6 +1,9 @@
 name: Run qqemail.py
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '30 7,14 * * *'  # 每天北京时间早上7点30分和中午2点30分执行
 
