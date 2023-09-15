@@ -39,7 +39,7 @@ if __name__ == '__main__':
     app_password = "fmgrfgnnfqwscfif"
     receiver_emails_tsy = ["934779790@qq.com","1612061987@qq.com"]
     receiver_emails_hzh = ["hzh13714645712@163.com"]
-    receiver_emails_lyh = ["1612061987@qq.com"]
+    receiver_emails_lyh = ["1612061987@qq.com","2953265769@qq.com"]
 
     subject_tsy = api_lyh.rainbow_fart()
     subject_hzh = api_lyh.rainbow_fart()
