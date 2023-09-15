@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '30 7,14 * * *'  # 每天北京时间早上7点30分和中午2点30分执行
+    - cron: '30 23,6 * * *'  # 每天北京时间早上7点30分和中午2点30分执行
 
 jobs:
   run_script:
