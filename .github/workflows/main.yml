@@ -2,7 +2,7 @@ name: Run qqemail.py
 
 on:
   schedule:
-    - cron: '30 7 * * *'  # 每天北京时间早上7点30分执行
+    - cron: '47 11 * * *'  # 每天北京时间早上7点30分执行
 
 jobs:
   run_script:
