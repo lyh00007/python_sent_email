@@ -6,8 +6,10 @@ on:  [push]
 jobs:
   run_script:
     runs-on: ubuntu-latest
-
+    
     steps:
+    - name: Install dependencies
+      run: pip install requests
     - name: Checkout code
       uses: actions/checkout@v2
 
