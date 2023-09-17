@@ -36,7 +36,13 @@ jobs:
         fi
 
     - name: Wait until execution time
-      run: sleep $(( ${{ steps.execution_time.outputs.execution_time }} - $(date -u +%s) ))
+      run: |
+        execution_time=${{ steps.execution_time.outputs.execution_time }}
+        current_time=$(date -u +%s)
+        sleep_duration=$((execution_time - current_time))
+        echo "Waiting for $sleep_duration seconds..."
+        sleep $sleep_duration
+
 
     - name: Install dependencies
       run: pip install requests
