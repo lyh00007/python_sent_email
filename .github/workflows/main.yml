@@ -10,8 +10,13 @@ on:
 jobs:
   run_script:
     runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai  # 设置时区为北京时间
     
     steps:
+
+    - name: Install dependencies
+      run: pip install requests
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -19,33 +24,12 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-
-    - name: Determine execution time
-      id: execution_time
-      run: |
-        if [[ "${{ github.event_name }}" == "schedule" ]]; then
-          scheduled_time="${{ github.event.scheduled_time }}"
-          # Convert scheduled_time to Beijing time (UTC+8)
-          execution_time=$((scheduled_time + 8*3600))
-          echo "Scheduled execution time (Beijing time): $(date -d @${execution_time})"
-          echo "::set-output name=execution_time::${execution_time}"
-        else
-          # For push events, execute immediately
-          execution_time=0
-          echo "::set-output name=execution_time::${execution_time}"
-        fi
-
-    - name: Wait until execution time
-      run: |
-        execution_time=${{ steps.execution_time.outputs.execution_time }}
-        current_time=$(date -u +%s)
-        sleep_duration=$((execution_time - current_time))
-        echo "Waiting for $sleep_duration seconds..."
-        sleep $sleep_duration
-
-
+    - name: Upgrade pip
+      run: python -m pip install --upgrade pip
     - name: Install dependencies
-      run: pip install requests
+      run: python -m pip install requests
+    - name: Install dependencies
+      run: python -m pip install chardet
 
     - name: Run qqemail.py
       run: python qqemail.py
