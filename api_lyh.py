@@ -50,7 +50,7 @@ def list():
         numbers_list = numbers_content.split(",")
 
     # 从数字列表中随机选择五个不同的序号内容
-        random_samples = random.sample(numbers_list, 10)          #这里设置发送题目的个数
+        random_samples = random.sample(numbers_list, 12)          #这里设置发送题目的个数
         numbers_list = [element.strip() for element in numbers_content.split(".")]
         #print(random_samples)
     # 输出随机选择的序号内容
@@ -112,7 +112,7 @@ def tianqi():
 
 def Curriculum():
     # 定义中文星期几的名称列表
-    chinese_weekdays = ["非常痛苦星期一", "一般痛苦星期二", "痛苦星期三", "疯狂星期四", "明天放假星期五", "快乐星期六", "快乐星期日"]
+    chinese_weekdays = ["痛苦星期一", "痛苦星期二", "痛苦星期三", "疯狂星期四", "痛苦星期五", "快乐星期六", "快乐星期日"]
 
     # 获取当前日期
     now = datetime.now()
@@ -238,16 +238,75 @@ def Curriculum():
 },
 
 
+    "zyt":{
+    "Monday": [
+        {"time": "08:00 AM - 9:40  AM" ,"address":"科技楼-A102",  "course":"职业定位与发展"},
+        {"time": "10:00 AM - 11:40 PM","address":"科技楼-A302", "course": "算法分析与设计"},
+        {"time": "14:40 PM - 16:20 PM","address":"", "course": no_classes},
+        {"time": "16:30 PM - 18:00 PM","address":"", "course": no_classes},
+        {"time": "19:30 PM - 21:10 PM","address":"", "course": no_classes},
+    ],
+    "Tuesday": [
+        {"time": "08:00 AM - 9:40  AM","address":"科技楼-A102", "course": "职业定位与发展"},
+        {"time": "10:00 AM - 11:40 PM","address":"科技楼-A407", "course": "WEB程序设计"},
+        {"time": "14:40 PM - 16:20 PM","address":"科技楼-A203", "course": "计算机网络"},
+        {"time": "16:30 PM - 18:00 PM","address":"", "course": no_classes},
+        {"time": "19:30 PM - 21:10 PM","address":"", "course": no_classes},
+    ],
+    "Wednesday": [
+        {"time": "08:00 AM - 9:40  AM","address":"", "course": no_classes},
+        {"time": "10:00 AM - 11:40 PM","address":"", "course": no_classes},
+        {"time": "14:40 PM - 16:20 PM","address":"", "course": no_classes},
+        {"time": "16:30 PM - 18:00 PM","address":"科技楼-A102", "course": "职业定位与发展"},
+        {"time": "19:30 PM - 21:10 PM","address":"", "course": no_classes},
+    ],
+    "Thursday": [
+        {"time": "08:00 AM - 9:40  AM","address":"科技楼-A303", "course": "计算机网络"},
+        {"time": "10:00 AM - 11:40 PM","address":"科技楼-A102", "course": "职业定位与发展"},
+        {"time": "14:40 PM - 16:20 PM","address":"", "course": no_classes},
+        {"time": "16:30 PM - 18:00 PM","address":"", "course": no_classes},
+        {"time": "19:30 PM - 21:10 PM","address":"", "course": no_classes},
+    ],
+    "Friday": [
+        {"time": "08:00 AM - 9:40  AM","address":"", "course": no_classes},
+        {"time": "10:00 AM - 11:40 PM","address":"", "course": no_classes},
+        {"time": "14:40 PM - 16:20 PM","address":"锡科楼404", "course": "临床实验室质量控制与管理"},
+        {"time": "16:30 PM - 18:00 PM","address":"", "course": no_classes},
+        {"time": "19:30 PM - 21:10 PM","address":"", "course": no_classes},
+    ],
+    "Saturday": [
+        {"time": "08:00 AM - 9:40  AM","address":"", "course": no_classes},
+        {"time": "10:00 AM - 11:40 PM","address":"", "course": no_classes},
+        {"time": "14:40 PM - 16:20 PM","address":"", "course": no_classes},
+        {"time": "16:30 PM - 18:00 PM","address":"", "course": no_classes},
+        {"time": "19:30 PM - 21:10 PM","address":"", "course": no_classes},
+    ],
+    "Sunday": [
+        {"time": "08:00 AM - 9:40  AM","address":"", "course": no_classes},
+        {"time": "10:00 AM - 11:40 PM","address":"", "course": no_classes},
+        {"time": "14:40 PM - 16:20 PM","address":"", "course": no_classes},
+        {"time": "16:30 PM - 18:00 PM","address":"", "course": no_classes},
+        {"time": "19:30 PM - 21:10 PM","address":"", "course": no_classes},
+    ],
+
+    # 添加其他日期的课程和时间
+},
+
+
 }
 
     lyh_schedule = class_schedule["lyh"]
     hzh_schedule = class_schedule["hzh"]
+    zyt_schedule = class_schedule["zyt"]
 
     today_lyhschedule = lyh_schedule[today]
     today_hzhschedule = hzh_schedule[today]
+    today_zytschedule = zyt_schedule[today]
 
     today_hzh = today
     today_lyh = today
+    today_zyt = today
+
     # 构建邮件正文内容
     for class_info in today_lyhschedule:
         time = class_info["time"]
@@ -263,7 +322,17 @@ def Curriculum():
         class_info_str = f"\n时间：{time} \n地点：{address} \n课程：{course}\n"
         today_hzh += class_info_str
 
+    for class_info in today_zytschedule:
+        time = class_info["time"]
+        course = class_info["course"]
+        address = class_info["address"]
+        class_info_str = f"\n时间：{time} \n地点：{address} \n课程：{course}\n"
+        today_zyt += class_info_str
+
     body_hzh = f"请查看{chinese_weekday}的课表{today_hzh}"
     body_lyh = f"请查看{chinese_weekday}的课表{today_lyh}"
-    return body_lyh,body_hzh
-
+    body_zyt = f"请查看{chinese_weekday}的课表{today_lyh}"
+    return body_lyh,body_hzh,body_zyt
+"""Curriculum()
+lyh = Curriculum()[2]
+print(lyh)"""

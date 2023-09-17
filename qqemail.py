@@ -30,43 +30,54 @@ def send_email(sender_email, app_password, receiver_emails, subject, body_lines)
         server.login(sender_email, app_password)
         server.sendmail(sender_email, receiver_emails, message.as_string())
         server.quit()
-        print(f"{sender_email}邮件发送成功")
+        print(f"{receiver_email}邮件发送成功")
     except Exception as e:
-        print(f"邮件发送失败: {e}")
+        print(f"邮件发送失败给{receiver_email}: {e}")
 
 if __name__ == '__main__':
     sender_email = "1612061987@qq.com"
     app_password = "fmgrfgnnfqwscfif"
-    receiver_emails_tsy = ["934779790@qq.com","1612061987@qq.com"]
-    receiver_emails_hzh = ["hzh13714645712@163.com"]
-    receiver_emails_lyh = ["1612061987@qq.com","2953265769@qq.com"]
 
-    subject_tsy = api_lyh.rainbow_fart()
-    subject_hzh = api_lyh.rainbow_fart()
-    subject_lyh = api_lyh.rainbow_fart()
+    receivers = {#13922813448@163.com
+        "tsy": ["934779790@qq.com"],#,"1612061987@qq.com"
+        "hzh": ["hzh13714645712@163.com"],#,"1612061987@qq.com"
+        "lyh": ["1612061987@qq.com","2953265769@qq.com"],#
+        "zyt": ["1836535514@qq.com"]  #"1612061987@qq.com","13922813448@163.com"
+    }
 
-    body_lines_tsy = [
-        "当前天气温馨提示：" + api_lyh.tianqi()[0],
-        "要好好学习才是乖宝宝",
-        "\n".join(api_lyh.list()),  # 将列表转换为字符串
-        "想对姐姐说的话:\n" + api_lyh.dog(),
-        api_lyh.wyy()
-    ]
+    subject_names = ["tsy", "hzh", "lyh", "zyt"]
+    subjects = {name: api_lyh.rainbow_fart() for name in subject_names}
 
-    body_lines_hzh = [
-        "当前天气温馨提示：" + api_lyh.tianqi()[2],
-        "你个傻杯能不能好好学习",
-        api_lyh.Curriculum()[1],
-        "今日舔狗:\n" + api_lyh.dog(),
-        api_lyh.wyy()
-    ]
-    body_lines_lyh = [
-        "当前天气温馨提示：" + api_lyh.tianqi()[1],
-        "出门记得检查垃圾袋",
-        api_lyh.Curriculum()[0],
-        "今日舔狗:\n" + api_lyh.dog(),
-        api_lyh.wyy()
-    ]
-    send_email(sender_email, app_password, receiver_emails_tsy, subject_tsy, body_lines_tsy)
-    send_email(sender_email, app_password, receiver_emails_hzh, subject_hzh, body_lines_hzh)
-    send_email(sender_email, app_password, receiver_emails_lyh, subject_lyh, body_lines_lyh)
+
+    body_lines = {
+        "tsy": [
+            f"当前天气温馨提示：{api_lyh.tianqi()[0]}",
+            "要好好学习才是乖宝宝",
+            "\n".join(api_lyh.list())
+        ],
+        "lyh": [
+            f"当前天气温馨提示：{api_lyh.tianqi()[1]}",
+            "出门记得检查垃圾袋",
+            api_lyh.Curriculum()[0],
+            f"今日舔狗:\n{api_lyh.dog()}\n",
+            api_lyh.wyy()
+        ],
+        "hzh": [
+            f"当前天气温馨提示：{api_lyh.tianqi()[2]}",
+            "你个傻杯能不能好好学习",
+            api_lyh.Curriculum()[1],
+            f"今日舔狗:\n{api_lyh.dog()}\n",
+            api_lyh.wyy()
+        ],
+        "zyt": [
+            f"当前天气温馨提示：{api_lyh.tianqi()[1]}",
+            "你个傻杯能不能好好学习",
+            api_lyh.Curriculum()[2],
+            f"今日舔狗:\n{api_lyh.dog()}\n",
+            api_lyh.wyy()
+        ]
+    }
+
+    for name in receivers:
+        for receiver_email in receivers[name]:
+            send_email(sender_email, app_password, receiver_email, subjects[name], body_lines[name])
