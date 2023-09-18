@@ -331,7 +331,7 @@ def Curriculum():
 
     body_hzh = f"请查看{chinese_weekday}的课表{today_hzh}"
     body_lyh = f"请查看{chinese_weekday}的课表{today_lyh}"
-    body_zyt = f"请查看{chinese_weekday}的课表{today_lyh}"
+    body_zyt = f"请查看{chinese_weekday}的课表{today_zyt}"
     return body_lyh,body_hzh,body_zyt
 """Curriculum()
 lyh = Curriculum()[2]
